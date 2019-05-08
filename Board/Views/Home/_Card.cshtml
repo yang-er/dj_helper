@@ -1,0 +1,42 @@
+﻿@{ 
+    var contest = DataService.Instance.Contest;
+    var scoreboard = DataService.Instance.ScoreBoard;
+    var freezeTime = DataService.Instance.BoardFreezeTime;
+    var freezeLength = DataService.Instance.FreezeLength;
+}
+
+<div class="card">
+    <div class="card-header" style="font-family: Roboto, sans-serif; display: flex;">
+        <span style="font-weight: bold;">@contest.formal_name</span>
+        <span style="color: DimGray; margin-left: auto;">
+            @if (scoreboard.state.started is null || contest.start_time > DateTime.Now)
+            {
+                @($"scheduled to start on {contest.start_time:HH:mm}")
+            }
+            else if (scoreboard.state.ended is null)
+            {
+                @($"starts: {contest.start_time:HH:mm} - ends: {contest.end_time:HH:mm}")
+            }
+            else if (scoreboard.state.thawed is null)
+            {
+                @("contest over, waiting for results")
+            }
+            else if (scoreboard.state.finalized is null)
+            {
+                @("preliminary results - not final")
+            }
+            else
+            {
+                @("final standings")
+            }
+        </span>
+    </div>
+</div>
+
+@if (DateTime.Now > freezeTime && scoreboard.state.thawed is null)
+{
+<div class="alert alert-warning" role="alert" style="font-size: 80%;">
+    The scoreboard was frozen with @freezeLength minutes remaining - solutions
+    submitted in the last @freezeLength minutes of the contest are still shown as pending.
+</div>
+}

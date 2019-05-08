@@ -1,0 +1,246 @@
+﻿@model IEnumerable<RankTermModel>
+@{
+    var color = new Dictionary<string, string>
+    {
+        { "3", "ffffff" },
+        { "4", "ffcc33" },
+        { "14550", "ffffff" }
+    };
+
+    var fb = DataService.Instance.FirstSolve;
+    var inc = DataService.Instance.Incorrect;
+    var sol = DataService.Instance.Solved;
+    var tott = DataService.Instance.SolvedTotal;
+    var pend = DataService.Instance.Pending;
+    var orgs = DataService.Instance.Organizations;
+}
+
+<div data-ajax-refresh-target data-ajax-refresh-after="initializeScoreboard" class="mt-3">
+    <partial name="_Card" />
+    <partial name="_Filter" />
+
+    <table class="scoreboard center ">
+        <colgroup>
+            <col id="scorerank" />
+            <col />
+            <col id="scorelogos" />
+            <col id="scoreteamname" />
+        </colgroup>
+        <colgroup>
+            <col id="scoresolv" />
+            <col id="scoretotal" />
+        </colgroup>
+        <colgroup>
+            <col class="scoreprob" />
+            <col class="scoreprob" />
+            <col class="scoreprob" />
+        </colgroup>
+
+        <partial name="_THeader" />
+
+        <tbody>
+            @{ int lastRank = 0; }
+            @foreach (var row in Model)
+            {
+                var org = orgs.ContainsKey(row.Team.organization_id)
+                        ? orgs[row.Team.organization_id]
+                        : new AffiliationModel { name = "cz" };
+
+                <tr class="" id="team:@row.Base.team_id">
+                    <td class="scorepl">
+                        @if (lastRank != @row.Base.rank)
+                    {
+                        @row.Base.rank
+                        lastRank = row.Base.rank;
+                    }
+                    </td>
+                    <td class="scoreaf"></td>
+                    <td class="scoreaf">
+                        <a>
+                            <img src="/images/affiliations/@(org.name.ToLower()).png" alt="@row.Team.affiliation"
+                                 title="@row.Team.affiliation" class="affiliation-logo">
+                        </a>
+                    </td>
+                    <td class="scoretn cl_@color[row.Team.group_ids[0]]" title="@row.Team.name">
+                        <a data-ajax-modal href="/team/@row.Base.team_id">
+                            <span class="forceWidth">
+                                @row.Team.name
+                            </span>
+                            <span class="univ forceWidth">
+                                @row.Team.affiliation
+                            </span>
+                        </a>
+                    </td>
+                    <td class="scorenc">@row.Base.score.num_solved</td>
+                    <td class="scorett">@row.Base.score.total_time</td>
+
+                    @for (int i = 0; i < sol.Length; i++)
+                    {
+                        var prob = row.Base.problems[i];
+
+                        <td class="score_cell">
+                            @if (prob.num_pending + prob.num_judged > 0)
+                            {
+                                <a>
+                                    <div class="@prob.StyleClass(prob.time == fb[i])">
+                                        @if (prob.solved) { @prob.time } else { @Html.Raw("&nbsp;")}
+                                        <span>
+                                            @prob.Tries()
+                                        </span>
+                                    </div>
+                                </a>
+                            }
+                        </td>
+
+                    }
+                </tr>
+            }
+
+            <tr style="border-top: 2px solid black;">
+                <td id="scoresummary" title="Summary" colspan="4">Summary</td>
+                <td title="total solved" class="scorenc">@tott</td>
+                <td></td>
+                @for (int i = 0; i < sol.Length; i++)
+                {
+                    <td style="text-align: left;">
+                        <a>
+                            <i class="fas fa-thumbs-up fa-fw"></i>
+                            <span style="font-size:90%;" title="number of accepted submissions">
+                                @sol[i]
+                            </span>
+                            <br />
+                            <i class="fas fa-thumbs-down fa-fw"></i>
+                            <span style="font-size:90%;" title="number of rejected submissions">
+                                @inc[i]
+                            </span>
+                            <br />
+                            <i class="fas fa-question-circle fa-fw"></i>
+                            <span style="font-size:90%;" title="number of pending submissions">
+                                @pend[i]
+                            </span>
+                            <br />
+                            <i class="fas fa-clock fa-fw"></i>
+                            <span style="font-size:90%;" title="first solved">
+                                @if (fb[i] == int.MaxValue)
+                                {@("n/a") }
+                            else
+                            { @($"{fb[i]}min")}
+                            </span>
+                        </a>
+                    </td>
+                }
+
+            </tr>
+        </tbody>
+    </table>
+    <p><br /><br /></p>
+
+    <table id="categ_legend" class="scoreboard scorelegend ">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <a>Categories</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background: #ffcc33;">
+                <td>
+                    <a>Observers</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a>Participants</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table id="cell_legend" class="scoreboard scorelegend ">
+        <thead>
+            <tr>
+                <th scope="col">Cell colours</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="score_first">
+                <td>Solved first</td>
+            </tr>
+            <tr class="score_correct">
+                <td>Solved</td>
+            </tr>
+            <tr class="score_incorrect">
+                <td>Tried, incorrect</td>
+            </tr>
+            <tr class="score_pending">
+                <td>Tried, pending</td>
+            </tr>
+            <tr class="score_neutral">
+                <td>Untried</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <style>
+
+        .cl_FFFFFF {
+            background-color: #FFFFFF;
+        }
+
+        .cl_ffcc33 {
+            background-color: #ffcc33;
+        }
+
+    </style>
+
+    <p id="lastmod">
+        Last Update: @string.Format("{0:R}", DataService.Instance.LastUpdate).Replace("GMT", "CST")<br />
+        using <a href="https://www.domjudge.org/" target="_top">DOMjudge</a>
+    </p>
+</div>
+
+@section Scripts {
+
+    <script>
+        var domjudge_base_url = "/";
+        $(function () {
+            $('body').on('change', '.custom-file-input', function () {
+                var files = this.files;
+                var fileNames = [];
+                for (var i = 0; i < files.length; i++) {
+                    fileNames.push(files.item(i).name);
+                }
+                $(this).next('.custom-file-label').html(fileNames.join(", "));
+                $(this).next('.custom-file-label').removeClass('text-muted');
+            });
+
+            /* toggle refresh if set */
+            $('#refresh-navitem').on('click', function () {
+                toggleRefresh('/@Html.Raw(ViewData["CurrentQuery"])', 30, 1);
+            });
+            /* Enable page refresh if set if wanted by the page, and wanted by the user */
+            enableRefresh('/@Html.Raw(ViewData["CurrentQuery"])', 30, 1);
+
+            initializeAjaxModals();
+        });
+    </script>
+    <script>
+        initFavouriteTeams();
+
+        var scoreboardUrl = '/';
+
+        $(function () {
+            window.initializeScoreboard = function () {
+                var $newProgress = $('[data-ajax-refresh-target] > .d-none > [data-progress-bar]');
+                if ($newProgress.length) {
+                    var $oldProgress = $('body > [data-progress-bar]');
+                    $oldProgress.html($newProgress.children());
+                    $newProgress.parent().remove();
+                }
+
+                initFavouriteTeams();
+            };
+        });
+    </script>
+}

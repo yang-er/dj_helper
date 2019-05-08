@@ -1,0 +1,96 @@
+﻿@{ 
+    var start = new DateTimeOffset(DataService.Instance.Contest.start_time).ToUnixTimeSeconds();
+    var end = new DateTimeOffset(DataService.Instance.Contest.end_time).ToUnixTimeSeconds();
+    var now = DateTimeOffset.Now.ToUnixTimeSeconds();
+
+    long prog = now >= end ? 100 : (now - start) * 100 / (end - start);
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- DOMjudge version 7.0.0 sftb-->
+    <meta charset="utf-8">
+    <title>Scoreboard - DOMjudge</title>
+    <link rel="icon" href="/favicon.ico?v=7.0.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="~/css/bootstrap.min.css?v=7.0.0">
+    <link rel="stylesheet" href="~/css/fontawesome-all.min.css?v=7.0.0">
+    <script src="~/js/jquery.min.js?v=7.0.0"></script>
+    <script src="~/js/bootstrap.bundle.min.js?v=7.0.0"></script>
+
+    <script src="~/js/domjudge.js?v=7.0.0"></script>
+    <link rel="stylesheet" href="~/style_domjudge.css?v=7.0.0">
+</head>
+<body style="padding-top: 4.5rem;">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <a class="navbar-brand hidden-sm-down" href="/">DOMjudge</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuDefault"
+                aria-controls="menuDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="menuDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/"><i class="fas fa-list-ol"></i> Scoreboard</a>
+                </li>
+            </ul>
+
+            <a class="nav-link justify-content-center" href="/login">
+                <button type="button" class="btn btn-info btn-sm">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </a>
+
+            <ul class="navbar-nav">
+                <li class="ajax-loader-container">
+                    <div class="spinner-border spinner-border-sm ajax-loader" style="display: none;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="navbar-text" style="white-space:nowrap;">
+                <i style="padding-left: 10px;" class="fas fa-clock"></i>
+                <span id="timeleft">~</span>
+            </div>
+
+            <script>
+                var initial = @DateTimeOffset.Now.ToUnixTimeSeconds();
+                var activatetime = 1546338599;
+                var starttime = @Html.Raw(start);
+                var endtime = @Html.Raw(end);
+                var offset = 0;
+                var date = new Date(initial * 1000);
+                var timeleftelt = document.getElementById("timeleft");
+
+                setInterval(function () {
+                    updateClock();
+                }, 1000);
+                updateClock();
+            </script>
+        </div>
+    </nav>
+
+    @if (prog < 100 && prog > 0)
+    {
+        <div class="progress" style="margin-top:-9px; height: 10px;" data-progress-bar>
+            <div class="progress-bar" role="progressbar" style="width: @(prog)%;"
+                 aria-valuenow="@(prog)" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    }
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

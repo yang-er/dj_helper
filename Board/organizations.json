@@ -1,0 +1,514 @@
+[
+    {
+        "icpc_id": "33",
+        "shortname": "Aalto U",
+        "id": "U-4334",
+        "name": "Aalto U",
+        "formal_name": "Aalto University",
+        "country": "FIN"
+    },
+    {
+        "icpc_id": "23",
+        "shortname": "Aarhus U.",
+        "id": "U-0016",
+        "name": "Aarhus U.",
+        "formal_name": "Aarhus University",
+        "country": "DNK"
+    },
+    {
+        "icpc_id": "58",
+        "shortname": "U-3088",
+        "id": "U-3088",
+        "name": "U-3088",
+        "formal_name": "Avans Hogeschool 's-Hertogenbosch",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "40",
+        "shortname": "Cardiff Met",
+        "id": "U-7708",
+        "name": "Cardiff Met",
+        "formal_name": "Cardiff Metropolitan University",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "18",
+        "shortname": "CAU Kiel",
+        "id": "U-0571",
+        "name": "CAU Kiel",
+        "formal_name": "Christian-Albrechts-Universitaet zu Kiel",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "19",
+        "shortname": "TU Delft",
+        "id": "U-0635",
+        "name": "TU Delft",
+        "formal_name": "Delft University of Technology",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "59",
+        "shortname": "D.C.U.",
+        "id": "U-0676",
+        "name": "D.C.U.",
+        "formal_name": "Dublin City University",
+        "country": "IRL"
+    },
+    {
+        "icpc_id": "3",
+        "shortname": "TU\/e",
+        "id": "U-0711",
+        "name": "TU\/e",
+        "formal_name": "Eindhoven University of Technology",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "2",
+        "shortname": "FRA-UAS",
+        "id": "U-0183",
+        "name": "FRA-UAS",
+        "formal_name": "Frankfurt University of Applied Sciences",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "11",
+        "shortname": "FAU",
+        "id": "U-0798",
+        "name": "FAU",
+        "formal_name": "Friedrich-Alexander-University Erlangen-Nuremberg",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "53",
+        "shortname": "HPI",
+        "id": "U-7419",
+        "name": "HPI",
+        "formal_name": "Hasso Plattner Institute",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "42",
+        "shortname": "Humboldt-Universit\u00e4t",
+        "id": "U-5477",
+        "name": "Humboldt-Universit\u00e4t",
+        "formal_name": "Humboldt-Universit\u00e4t zu Berlin",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "65",
+        "shortname": "imc",
+        "id": "U-0004",
+        "name": "imc",
+        "formal_name": "IMC",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "30",
+        "shortname": "Imperial",
+        "id": "U-3316",
+        "name": "Imperial",
+        "formal_name": "Imperial College London",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "28",
+        "shortname": "Jacobs U",
+        "id": "U-0998",
+        "name": "Jacobs U",
+        "formal_name": "Jacobs University",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "38",
+        "shortname": "JGU",
+        "id": "U-4257",
+        "name": "JGU",
+        "formal_name": "Johannes Gutenberg Universit\u00e4t Mainz",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "39",
+        "shortname": "KIT",
+        "id": "U-2086",
+        "name": "KIT",
+        "formal_name": "Karlsruhe Institute of Technology (KIT)",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "1",
+        "shortname": "U-3179",
+        "id": "U-3179",
+        "name": "U-3179",
+        "formal_name": "Katholieke Universiteit Leuven",
+        "country": "BEL"
+    },
+    {
+        "icpc_id": "7",
+        "shortname": "KTH",
+        "id": "U-1133",
+        "name": "KTH",
+        "formal_name": "KTH - Royal Institute of Technology",
+        "country": "SWE"
+    },
+    {
+        "icpc_id": "52",
+        "shortname": "Leiden",
+        "id": "U-1172",
+        "name": "Leiden",
+        "formal_name": "Leiden University",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "29",
+        "shortname": "LiTH",
+        "id": "U-1179",
+        "name": "LiTH",
+        "formal_name": "Link\u00f6ping Institute of Technology",
+        "country": "SWE"
+    },
+    {
+        "icpc_id": "60",
+        "shortname": "LMU Munich",
+        "id": "U-5269",
+        "name": "LMU Munich",
+        "formal_name": "Ludwig-Maximilians Universit\u00e4t M\u00fcnchen",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "22",
+        "shortname": "LU",
+        "id": "U-1192",
+        "name": "LU",
+        "formal_name": "Lund University",
+        "country": "SWE"
+    },
+    {
+        "icpc_id": "5",
+        "shortname": "Norwegian TNU",
+        "id": "U-1393",
+        "name": "Norwegian TNU",
+        "formal_name": "Norwegian University of Science and Technology",
+        "country": "NOR"
+    },
+    {
+        "icpc_id": "64",
+        "shortname": "ortec",
+        "id": "U-0003",
+        "name": "ortec",
+        "formal_name": "Ortec",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "62",
+        "shortname": "prodrive",
+        "id": "U-0001",
+        "name": "prodrive",
+        "formal_name": "Prodrive Technologies",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "32",
+        "shortname": "QUB",
+        "id": "U-7191",
+        "name": "QUB",
+        "formal_name": "Queens University Belfast",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "4",
+        "shortname": "Radboud",
+        "id": "U-7250",
+        "name": "Radboud",
+        "formal_name": "Radboud University",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "8",
+        "shortname": "Reykjavik U",
+        "id": "U-3052",
+        "name": "Reykjavik U",
+        "formal_name": "Reykjavik University ",
+        "country": "ISL"
+    },
+    {
+        "icpc_id": "17",
+        "shortname": "SU",
+        "id": "U-2084",
+        "name": "SU",
+        "formal_name": "Saarland University",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "63",
+        "shortname": "sioux",
+        "id": "U-0002",
+        "name": "sioux",
+        "formal_name": "Sioux",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "31",
+        "shortname": "null",
+        "id": "U-19264",
+        "name": "null",
+        "formal_name": "Tallinn University of Technology",
+        "country": "EST"
+    },
+    {
+        "icpc_id": "37",
+        "shortname": "TUT",
+        "id": "U-1798",
+        "name": "TUT",
+        "formal_name": "Tallinn University of Technology",
+        "country": "EST"
+    },
+    {
+        "icpc_id": "50",
+        "shortname": "TUM",
+        "id": "U-1833",
+        "name": "TUM",
+        "formal_name": "Technische Universitaet Muenchen",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "49",
+        "shortname": "UU",
+        "id": "U-7737",
+        "name": "UU",
+        "formal_name": "Ulster University",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "14",
+        "shortname": "UmU",
+        "id": "U-1936",
+        "name": "UmU",
+        "formal_name": "Ume\u00e5 University",
+        "country": "SWE"
+    },
+    {
+        "icpc_id": "16",
+        "shortname": "Ulm",
+        "id": "U-2089",
+        "name": "Ulm",
+        "formal_name": "Universit\u00e4t Ulm",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "48",
+        "shortname": "Uni L\u00fcbeck",
+        "id": "U-1227",
+        "name": "Uni L\u00fcbeck",
+        "formal_name": "Universit\u00e4t zu L\u00fcbeck",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "20",
+        "shortname": "U-3199",
+        "id": "U-3199",
+        "name": "U-3199",
+        "formal_name": "Universit\u00e9 catholique de Louvain",
+        "country": "BEL"
+    },
+    {
+        "icpc_id": "46",
+        "shortname": "UMONS",
+        "id": "U-7560",
+        "name": "UMONS",
+        "formal_name": "Universit\u00e9 de Mons",
+        "country": "BEL"
+    },
+    {
+        "icpc_id": "27",
+        "shortname": "ULB",
+        "id": "U-7642",
+        "name": "ULB",
+        "formal_name": "Universit\u00e9 Libre de Bruxelles",
+        "country": "BEL"
+    },
+    {
+        "icpc_id": "55",
+        "shortname": "U.U.",
+        "id": "U-2096",
+        "name": "U.U.",
+        "formal_name": "Universiteit Utrecht",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "13",
+        "shortname": "UvA",
+        "id": "U-2097",
+        "name": "UvA",
+        "formal_name": "Universiteit van Amsterdam",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "6",
+        "shortname": "UCD",
+        "id": "U-3317",
+        "name": "UCD",
+        "formal_name": "University College Dublin",
+        "country": "IRL"
+    },
+    {
+        "icpc_id": "10",
+        "shortname": "UCL",
+        "id": "U-6253",
+        "name": "UCL",
+        "formal_name": "University College London",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "41",
+        "shortname": "Bath",
+        "id": "U-5077",
+        "name": "Bath",
+        "formal_name": "University of Bath",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "51",
+        "shortname": "UiB",
+        "id": "U-2121",
+        "name": "UiB",
+        "formal_name": "University of Bergen",
+        "country": "NOR"
+    },
+    {
+        "icpc_id": "12",
+        "shortname": "Cambridge",
+        "id": "U-2134",
+        "name": "Cambridge",
+        "formal_name": "University of Cambridge",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "35",
+        "shortname": "DIKU",
+        "id": "U-2145",
+        "name": "DIKU",
+        "formal_name": "University of Copenhagen",
+        "country": "DNK"
+    },
+    {
+        "icpc_id": "25",
+        "shortname": "UEDIN",
+        "id": "U-5313",
+        "name": "UEDIN",
+        "formal_name": "University of Edinburgh",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "47",
+        "shortname": "Glasgow",
+        "id": "U-6187",
+        "name": "Glasgow",
+        "formal_name": "University of Glasgow",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "43",
+        "shortname": "University of G\u00f6ttin",
+        "id": "U-6512",
+        "name": "University of G\u00f6ttin",
+        "formal_name": "University of G\u00f6ttingen",
+        "country": "DEU"
+    },
+    {
+        "icpc_id": "57",
+        "shortname": "U Helsinki",
+        "id": "U-2986",
+        "name": "U Helsinki",
+        "formal_name": "University of Helsinki",
+        "country": "FIN"
+    },
+    {
+        "icpc_id": "56",
+        "shortname": "UI",
+        "id": "U-7135",
+        "name": "UI",
+        "formal_name": "University of Iceland",
+        "country": "ISL"
+    },
+    {
+        "icpc_id": "34",
+        "shortname": "UoL",
+        "id": "U-6062",
+        "name": "UoL",
+        "formal_name": "University of Liverpool",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "26",
+        "shortname": "Manchester",
+        "id": "U-5267",
+        "name": "Manchester",
+        "formal_name": "University of Manchester",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "44",
+        "shortname": "U-3386",
+        "id": "U-3386",
+        "name": "U-3386",
+        "formal_name": "University of Nottingham",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "24",
+        "shortname": "Oxford",
+        "id": "U-3264",
+        "name": "Oxford",
+        "formal_name": "University of Oxford",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "54",
+        "shortname": "U-6104",
+        "id": "U-6104",
+        "name": "U-6104",
+        "formal_name": "University of Southampton",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "15",
+        "shortname": "Tartu",
+        "id": "U-2285",
+        "name": "Tartu",
+        "formal_name": "University of Tartu",
+        "country": "EST"
+    },
+    {
+        "icpc_id": "9",
+        "shortname": "UTwente",
+        "id": "U-2307",
+        "name": "UTwente",
+        "formal_name": "University of Twente",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "45",
+        "shortname": "Warwick",
+        "id": "U-6175",
+        "name": "Warwick",
+        "formal_name": "University of Warwick",
+        "country": "GBR"
+    },
+    {
+        "icpc_id": "21",
+        "shortname": "Utrecht University",
+        "id": "U-2347",
+        "name": "Utrecht University",
+        "formal_name": "Utrecht University",
+        "country": "NLD"
+    },
+    {
+        "icpc_id": "36",
+        "shortname": "VU",
+        "id": "U-2381",
+        "name": "VU",
+        "formal_name": "Vrije Universiteit",
+        "country": "NLD"
+    }
+]
