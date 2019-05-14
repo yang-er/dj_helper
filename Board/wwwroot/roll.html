@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoreboard</title>
+</head>
+<body>
+  <iframe src="/" style="height:100vh; width:100vw; margin:0" frameborder="0" id="pageFrame" name="pageFrame"></iframe>
+  <script src="/js/jquery.min.js?v=7.0.0"></script>
+  <script>
+    var page_pos = 0;
+    $(function(){ var timer = setInterval("scrollPage();", 10); });
+    function scrollPage(){
+      var win = document.getElementById('pageFrame').contentWindow;
+      var doc = win.document;
+      win.scroll(0, ++page_pos);
+      if (page_pos>doc.body.scrollHeight-win.innerHeight) page_pos=0;
+    }
+  </script>
+</body>
+</html>
