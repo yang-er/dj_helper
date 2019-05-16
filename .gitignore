@@ -1,0 +1,11 @@
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+x64/
+x86/
+bld/
+[Dd]ebug/
+[Rr]elease/
+*.user
+.vs/
+

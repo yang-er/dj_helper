@@ -12,11 +12,15 @@ namespace PrintServer
     {
         readonly SemaphoreSlim semaphore;
         readonly Queue<string> printing;
-        readonly IPrinter printer;
+        readonly IPrinter printer, hand;
 
         ILogger<QueueService> Logger { get; }
 
         public static QueueService Instance { get; private set; }
+
+        public bool Automatic { get; set; }
+
+        public IPrinter Printer => Automatic ? printer : hand;
 
         public int Count => printing.Count;
 
@@ -27,6 +31,8 @@ namespace PrintServer
             Instance = this;
             Logger = logger;
             printer = prn;
+            hand = new Human();
+            Automatic = true;
         }
 
         public void Enqueue(string val)
@@ -39,11 +45,11 @@ namespace PrintServer
         {
             try
             {
-                await printer.ExecuteAsync(val, stoppingToken);
+                await Printer.ExecuteAsync(val, stoppingToken);
             }
             catch (Exception ex)
             {
-                var errorFile = $"{Guid.NewGuid()}.ps";
+                var errorFile = $"@failed_{Guid.NewGuid()}.ps";
                 await File.WriteAllTextAsync(errorFile, val);
                 Logger.LogError(ex, $"Print failed. Content saved into {errorFile}.");
             }
@@ -64,7 +70,7 @@ namespace PrintServer
             {
                 while (printing.Count > 0)
                 {
-                    var errorFile = $"{Guid.NewGuid()}.ps";
+                    var errorFile = $"@queued_{Guid.NewGuid()}.ps";
                     Logger.LogWarning($"Queued content saved into {errorFile}.");
                     await File.WriteAllTextAsync(errorFile, printing.Dequeue());
                 }

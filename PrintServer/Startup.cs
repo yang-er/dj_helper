@@ -26,6 +26,7 @@ namespace PrintServer
             }
 
             services.AddHostedService<QueueService>();
+            services.AddSingleton<WebMiddleware>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -35,25 +36,7 @@ namespace PrintServer
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
-            {
-                if (context.Request.Method == "GET")
-                {
-                    await context.Response.WriteAsync($"Printing Service running, {QueueService.Instance.Count} queued...");
-                }
-                else if (context.Request.Method == "POST")
-                {
-                    using (var sr = new StreamReader(context.Request.Body))
-                    {
-                        var content = await sr.ReadToEndAsync();
-                        QueueService.Instance.Enqueue(content);
-                    }
-                }
-                else
-                {
-                    context.Response.StatusCode = 400;
-                }
-            });
+            app.UseMiddleware<WebMiddleware>();
         }
     }
 }

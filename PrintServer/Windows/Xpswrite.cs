@@ -50,7 +50,9 @@ namespace PrintServer.Windows
             var guid = Guid.NewGuid();
             await File.WriteAllTextAsync($"{guid}.ps", content, Encoding.ASCII);
             PostScript2Xps(guid);
-            Process.Start("xpsrchvw.exe", $"{guid}.xps /p").WaitForExit();
+            await Process.Start("xpsrchvw.exe", $"{guid}.xps /p").WaitForExitAsync(stoppingToken);
+            File.Move($"{guid}.ps", $"@success_{guid}.ps");
+            File.Delete($"{guid}.xps");
         }
     }
 }
