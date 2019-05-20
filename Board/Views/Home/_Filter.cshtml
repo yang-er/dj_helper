@@ -23,8 +23,10 @@
                     }
                 </select>
                 <select class="form-control mr-2" multiple size="8" name="categories[]">
-                    <option issel="@(fil_cat?.Contains("3") ?? false)" value="3">Participants</option>
-                    <option issel="@(fil_cat?.Contains("4") ?? false)" value="4">Observers</option>
+                    @foreach (var (_, grp) in DataService.Instance.Groups)
+                    {
+                        <option issel="@(fil_cat?.Contains(grp.id) ?? false)" value="@grp.id">@grp.name</option>
+                    }
                 </select>
                 <input type="submit" class="btn btn-primary btn-sm align-top" name="filter" value="filter" />
                 <a class="btn btn-secondary btn-sm align-top" href="/">clear</a>

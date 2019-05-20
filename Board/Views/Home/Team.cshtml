@@ -1,11 +1,7 @@
 ﻿@model TeamModel
 @{
     Layout = null;
-    var category = new Dictionary<string, string>
-    {
-        { "3", "Participants" },
-        { "4", "Observers" },
-    };
+    var category = DataService.Instance.Groups;
 }
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -30,7 +26,7 @@
                             </tr>
                             <tr>
                                 <th>Category</th>
-                                <td>@category[Model.group_ids[0]]</td>
+                                <td>@category[Model.group_ids[0]].name</td>
                             </tr>
                             <tr>
                                 <th>Members</th>

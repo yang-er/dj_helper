@@ -1,18 +1,12 @@
 ﻿@model IEnumerable<RankTermModel>
 @{
-    var color = new Dictionary<string, string>
-    {
-        { "3", "ffffff" },
-        { "4", "ffcc33" },
-        { "14550", "ffffff" }
-    };
-
     var fb = DataService.Instance.FirstSolve;
     var inc = DataService.Instance.Incorrect;
     var sol = DataService.Instance.Solved;
     var tott = DataService.Instance.SolvedTotal;
     var pend = DataService.Instance.Pending;
     var orgs = DataService.Instance.Organizations;
+    var grps = DataService.Instance.Groups;
 }
 
 <div data-ajax-refresh-target data-ajax-refresh-after="initializeScoreboard" class="mt-3">
@@ -61,7 +55,7 @@
                                  title="@row.Team.affiliation" class="affiliation-logo">
                         </a>
                     </td>
-                    <td class="scoretn cl_@color[row.Team.group_ids[0]]" title="@row.Team.name">
+                    <td class="scoretn cl_@grps[row.Team.group_ids[0]].color.TrimStart('#')" title="@row.Team.name">
                         <a data-ajax-modal href="/team/@row.Base.team_id">
                             <span class="forceWidth">
                                 @row.Team.name
@@ -144,16 +138,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr style="background: #ffcc33;">
-                <td>
-                    <a>Observers</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a>Participants</a>
-                </td>
-            </tr>
+            @foreach (var grp in grps)
+            {
+                <tr style="background: @grp.Value.color;">
+                    <td>
+                        <a>@grp.Value.name</a>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 
@@ -184,12 +176,9 @@
 
     <style>
 
-        .cl_FFFFFF {
-            background-color: #FFFFFF;
-        }
-
-        .cl_ffcc33 {
-            background-color: #ffcc33;
+        @foreach (var grp in grps)
+        {
+            @Html.Raw(".cl_" + grp.Value.color.TrimStart('#') + " { background-color: " + grp.Value.color + "; }")
         }
 
     </style>

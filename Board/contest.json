@@ -1,12 +1,1 @@
-{
-    "formal_name": "NWERC 2018",
-    "penalty_time": 20,
-    "start_time": "2018-11-25T10:00:00+01:00",
-    "end_time": "2018-11-25T15:00:00+01:00",
-    "duration": "5:00:00.000",
-    "scoreboard_freeze_duration": "1:00:00.000",
-    "id": "nwerc18",
-    "external_id": "nwerc18",
-    "name": "NWERC 2018",
-    "shortname": "nwerc18"
-}
+{"formal_name":"NWERC 2018","penalty_time":20,"start_time":"2018-11-25T17:00:00+08:00","end_time":"2018-11-25T22:00:00+08:00","duration":"5:00:00.000","scoreboard_freeze_duration":"1:00:00.000","id":"nwerc18","external_id":"nwerc18","name":"NWERC 2018","shortname":"nwerc18"}

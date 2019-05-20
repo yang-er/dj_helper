@@ -24,6 +24,10 @@ namespace Transfer
             var organizations = await domServer.GetOrganizationsAsync();
             await fakeBoard.PutAsync("organizations", organizations);
 
+            Log("Synchronizing groups information...");
+            var groups = await domServer.GetGroupsAsync();
+            await fakeBoard.PutAsync("groups", groups);
+
             Log("Synchronizing teams information...");
             var teams = await domServer.GetTeamsAsync();
             await fakeBoard.PutAsync("teams", teams);

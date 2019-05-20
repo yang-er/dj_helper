@@ -47,6 +47,22 @@ namespace Board.Controllers
             return Ok();
         }
 
+        [Route("/api/groups")]
+        [HttpPut]
+        public IActionResult Groups([FromBody] List<Group> model)
+        {
+            foreach (var mod in model)
+            {
+                if (mod.color is null)
+                {
+                    mod.color = "#ffffff";
+                }
+            }
+
+            DataService.Instance.SetGroups(model);
+            return Ok();
+        }
+
         [Route("/api/scoreboard")]
         [HttpDelete]
         public IActionResult Scoreboard()

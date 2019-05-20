@@ -1,45 +1,25 @@
-﻿@{
-    var observers = DataService.Instance.Teams
-        .Where(p => p.Value.group_ids[0] == "4")
-        .Select(p => p.Value.affiliation)
-        .Distinct().ToList();
-    
-    var participants = DataService.Instance.Teams
-        .Where(p => p.Value.group_ids[0] == "3")
-        .Select(p => p.Value.affiliation)
-        .Distinct().ToList();
-}
-
-<div data-ajax-refresh-target data-ajax-refresh-after="initializeScoreboard" class="mt-3">
+﻿<div data-ajax-refresh-target data-ajax-refresh-after="initializeScoreboard" class="mt-3">
     <partial name="_Card" />
 
     <br />
     <br />
 
     <div class="card-deck">
-        <div class="card" style="font-family: Roboto, sans-serif;">
-            <div class="card-header">Observers</div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    @foreach (var aff in observers)
-                    {
-                        <li class="list-group-item">@aff</li>
-                    }
-                </ul>
-            </div>
-        </div>
+        @foreach (var grp in DataService.Instance.Groups)
+        {
 
-        <div class="card" style="font-family: Roboto, sans-serif;">
-            <div class="card-header">Participants</div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    @foreach (var aff in participants)
-                    {
-                        <li class="list-group-item">@aff</li>
-                    }
-                </ul>
+            <div class="card" style="font-family: Roboto, sans-serif;">
+                <div class="card-header">@grp.Value.name</div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var aff in DataService.Instance.Teams.Where(p => p.Value.group_ids[0] == grp.Value.id).Select(p => p.Value.affiliation).Distinct())
+                        {
+                            <li class="list-group-item">@aff</li>
+                        }
+                    </ul>
+                </div>
             </div>
-        </div>
+        }
     </div>
     <p id="lastmod">
         Last Update: @string.Format("{0:R}", DataService.Instance.LastUpdate).Replace("GMT", "CST")<br />

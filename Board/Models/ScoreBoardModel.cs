@@ -12,6 +12,16 @@ namespace Board.Models
         public Row[] rows { get; set; }
     }
 
+    public class Group
+    {
+        public bool hidden { get; set; }
+        public string icpc_id { get; set; }
+        public string id { get; set; }
+        public string name { get; set; }
+        public int sortorder { get; set; }
+        public string color { get; set; }
+    }
+
     public class State
     {
         public DateTime? started { get; set; }

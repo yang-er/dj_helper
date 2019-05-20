@@ -26,6 +26,10 @@ namespace Board.Services
 
         private List<AffiliationModel> _affilInner;
 
+        public Dictionary<string, Group> Groups { get; private set; }
+
+        private List<Group> _groupInner;
+
         public ScoreBoardModel ScoreBoard { get; private set; }
 
         public ContestModel Contest { get; private set; }
@@ -94,6 +98,12 @@ namespace Board.Services
             Pending = pend;
             FirstSolve = fb;
             LastUpdate = DateTime.Now;
+        }
+
+        public void SetGroups(List<Group> groups)
+        {
+            _groupInner = groups;
+            Groups = groups.ToDictionary(t => t.id);
         }
 
         public void SetTeams(List<TeamModel> teams)
@@ -176,6 +186,13 @@ namespace Board.Services
                 Logger.LogInformation("problems.json cache loaded from disk.");
             }
 
+            if (File.Exists("groups.json"))
+            {
+                var content = await File.ReadAllTextAsync("groups.json", cancellationToken);
+                SetGroups(Parse<List<Group>>(content));
+                Logger.LogInformation("groups.json cache loaded from disk.");
+            }
+
             if (File.Exists("contest.json"))
             {
                 var content = await File.ReadAllTextAsync("contest.json", cancellationToken);
@@ -220,6 +237,7 @@ namespace Board.Services
             await File.WriteAllTextAsync("problems.json", ToJson(Problems), cancellationToken);
             await File.WriteAllTextAsync("organizations.json", ToJson(_affilInner), cancellationToken);
             await File.WriteAllTextAsync("contest.json", ToJson(Contest), cancellationToken);
+            await File.WriteAllTextAsync("groups.json", ToJson(_groupInner), cancellationToken);
         }
     }
 }

@@ -46,5 +46,10 @@ namespace Transfer
         {
             return httpClient.GetStringAsync("contests/" + contestId + "/scoreboard");
         }
+
+        public Task<string> GetGroupsAsync()
+        {
+            return httpClient.GetStringAsync("contests/" + contestId + "/groups");
+        }
     }
 }
