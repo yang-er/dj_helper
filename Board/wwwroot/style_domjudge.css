@@ -171,6 +171,8 @@ del {
     white-space: nowrap;
 }
 .forceWidth {
+    max-width: 13rem;
+    text-overflow: ellipsis;
     position: relative;
     display: block;
     overflow: hidden;
