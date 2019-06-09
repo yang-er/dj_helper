@@ -1,0 +1,27 @@
+<component name="libraryTable">
+  <library name="contestModel">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/contestModel.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/javax.json-api-1.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/javax.json-1.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/jna-3.5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/platform-3.5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/presentCore.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/resolver.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/slf4j-api-1.7.10.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/slf4j-nop-1.7.10.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/snakeyaml-1.18.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/swt-cocoa-macosx-x86_64.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/swt-cocoa-macosx.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/swt-win32-win32-x86_64.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/swt-win32-win32-x86.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/swt-gtk-linux-x86.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/swt-gtk-linux-x86_64.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/tyrus-standalone-client-1.12.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/swtLauncher.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/resolver-2.0/lib/vlcj-3.9.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
