@@ -7,7 +7,7 @@
         public string short_name { get; set; }
         public string id { get; set; }
         public string label { get; set; }
-        public int time_limit { get; set; }
+        public double time_limit { get; set; }
         public string externalid { get; set; }
         public string name { get; set; }
         public string rgb { get; set; }
