@@ -1,0 +1,14 @@
+[Unit]
+Description=DOMjudge judgehost
+Requires=network.target
+After=apache2.service
+After=create_cgroups.service
+
+[Service]
+Type=simple
+User=dj
+Group=dj
+ExecStart=/opt/domjudge/judgehost/bin/judgedaemon -n 2
+
+[Install]
+WantedBy=multi-user.target

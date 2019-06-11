@@ -1,0 +1,9 @@
+[Unit]
+Description=DOMjudge Create cgroups
+
+[Service]
+Type=oneshot
+ExecStart=/opt/domjudge/judgehost/bin/create_cgroups
+
+[Install]
+WantedBy=multi-user.target
