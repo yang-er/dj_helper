@@ -41,6 +41,11 @@ namespace Board.Services
             _dict.TryAdd(name, new DataHolder(name, title, _loggerFactory));
         }
 
+        public List<Tenant> GetTenants()
+        {
+            return _dict.Values.Select(a => new Tenant { name = a._name, title = a._title }).ToList();
+        }
+
         private static T Parse<T>(string jsonString)
         {
             try
