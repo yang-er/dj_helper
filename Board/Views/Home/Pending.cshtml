@@ -1,31 +1,13 @@
-﻿<div data-ajax-refresh-target data-ajax-refresh-after="initializeScoreboard" class="mt-3">
-    <partial name="_Card" />
+﻿@{
+    var ctx = DataService.Instance.Contest;
+}
 
-    <br />
-    <br />
-
-    <div class="card-deck">
-        @foreach (var grp in DataService.Instance.Groups)
-        {
-
-            <div class="card" style="font-family: Roboto, sans-serif;">
-                <div class="card-header">@grp.Value.name</div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        @foreach (var aff in DataService.Instance.Teams.Where(p => p.Value.group_ids[0] == grp.Value.id).Select(p => p.Value.affiliation).Distinct())
-                        {
-                            <li class="list-group-item">@aff</li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        }
-    </div>
-    <p id="lastmod">
-        Last Update: @string.Format("{0:R}", DataService.Instance.LastUpdate).Replace("GMT", "CST")<br />
-        using <a href="https://www.domjudge.org/" target="_top">DOMjudge</a>
-    </p>
-</div>
+<h1 id="teamwelcome" class="text-center">
+    Welcome to @ctx.name!
+</h1>
+<h2 id="contestnotstarted" class="text-center">
+    Contest scheduled to start on @ctx.start_time.ToString("ddd, dd MMM yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture) CST
+</h2>
 
 @section Scripts {
 

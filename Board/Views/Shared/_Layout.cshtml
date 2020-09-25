@@ -86,7 +86,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                @RenderBody()
+                <div data-ajax-refresh-target data-ajax-refresh-after="initializeScoreboard" class="mt-3">
+                    @RenderBody()
+                </div>
             </div>
         </div>
     </div>

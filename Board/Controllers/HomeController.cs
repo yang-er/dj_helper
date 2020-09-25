@@ -6,11 +6,33 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Board.Models;
 using Board.Services;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Board.Controllers
 {
     public class HomeController : Controller
     {
+        public override void OnActionExecuted(ActionExecutedContext context)
+        {
+            base.OnActionExecuted(context);
+
+            if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                if (context.Result is ViewResult viewResult)
+                {
+                    context.Result = new PartialViewResult
+                    {
+                        TempData = viewResult.TempData,
+                        ViewData = viewResult.ViewData,
+                        ViewEngine = viewResult.ViewEngine,
+                        ViewName = viewResult.ViewName,
+                        StatusCode = 200,
+                        ContentType = "text/html",
+                    };
+                }
+            }
+        }
+
         [Route("/")]
         public IActionResult Index(
             [FromQuery(Name = "affiliations[]")] string[] affiliations,
@@ -60,20 +82,6 @@ namespace Board.Controllers
                 Base = t.r,
                 Team = t.Item2
             }).ToList());
-        }
-
-        [Route("/team/{id}")]
-        public IActionResult Team(int id)
-        {
-            var suc = DataService.Instance.Teams.TryGetValue($"{id}", out var model);
-            return suc ? View(model) : (IActionResult)NotFound();
-        }
-
-        [Route("/error")]
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -4,33 +4,5 @@
     var fil_cat = (HashSet<string>)ViewData["Filter_categories"];
 }
 
-<div class="dropdown">
-    <button class="btn btn-outline-secondary btn-sm m-2 dropdown-toggle" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false" id="filter-toggle">
-        <i class="fas fa-filter"></i>
-        Filter
-        @if (fil_aff != null) { @Html.Raw("(affiliations)") }
-        @if (fil_cat != null) { @Html.Raw("(categories)") }
-    </button>
-
-    <div class="dropdown-menu" aria-labelledby="filter-toggle">
-        <form asp-action="Index" method="get">
-            <div class="m-2 p-2 form-inline">
-                <select class="form-control mr-2" multiple size="8" name="affiliations[]">
-                    @foreach (var (_, aff) in DataService.Instance.Organizations)
-                    {
-                        <option issel="@(fil_aff?.Contains(aff.id) ?? false)" value="@aff.id">@aff.formal_name</option>
-                    }
-                </select>
-                <select class="form-control mr-2" multiple size="8" name="categories[]">
-                    @foreach (var (_, grp) in DataService.Instance.Groups)
-                    {
-                        <option issel="@(fil_cat?.Contains(grp.id) ?? false)" value="@grp.id">@grp.name</option>
-                    }
-                </select>
-                <input type="submit" class="btn btn-primary btn-sm align-top" name="filter" value="filter" />
-                <a class="btn btn-secondary btn-sm align-top" href="/">clear</a>
-            </div>
-        </form>
-    </div>
-</div>
+<div class="dropdown"><button class="btn btn-outline-secondary btn-sm m-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filter-toggle"><i class="fas fa-filter"></i> Filter @if (fil_aff != null) { @Html.Raw("(affiliations)") } @if (fil_cat != null) { @Html.Raw("(categories)") }</button>
+<div class="dropdown-menu" aria-labelledby="filter-toggle"><form asp-action="Index" method="get"><div class="m-2 p-2 form-inline"><select class="form-control mr-2" multiple size="8" name="affiliations[]">@foreach (var (_, aff) in DataService.Instance.Organizations){<option issel="@(fil_aff?.Contains(aff.id) ?? false)" value="@aff.id">@aff.formal_name</option>}</select><select class="form-control mr-2" multiple size="8" name="categories[]">@foreach (var (_, grp) in DataService.Instance.Groups){<option issel="@(fil_cat?.Contains(grp.id) ?? false)" value="@grp.id">@grp.name</option>}</select><input type="submit" class="btn btn-primary btn-sm align-top" name="filter" value="filter" /><a class="btn btn-secondary btn-sm align-top" href="/">clear</a></div></form></div></div>
