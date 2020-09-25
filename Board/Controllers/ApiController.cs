@@ -1,54 +1,65 @@
 ﻿using Board.Models;
 using Board.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 
 namespace Board.Controllers
 {
+    [Route("api/{name}")]
     public class ApiController : Controller
     {
-        [Route("/api/")]
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            base.OnActionExecuting(context);
+
+            if (!context.RouteData.Values.TryGetValue("name", out var __name) ||
+                !(__name is string name) ||
+                !DataService.Instance.Have(name))
+            {
+                context.Result = NotFound();
+                return;
+            }
+
+            HttpContext.Features.Set(DataService.Instance[name]);
+        }
+
         [HttpGet]
         public ActionResult<string[]> Index()
         {
             return new string[] { "contest", "organizations", "problems", "scoreboard", "teams" };
         }
 
-        [Route("/api/contest")]
-        [HttpPut]
+        [HttpPut("contest")]
         public IActionResult Contest([FromBody] ContestModel model)
         {
-            DataService.Instance.SetContest(model);
+            HttpContext.Holder().SetContest(model);
             return Ok();
         }
 
-        [Route("/api/organizations")]
-        [HttpPut]
+        [HttpPut("organizations")]
         public IActionResult Organizations([FromBody] List<AffiliationModel> model)
         {
-            DataService.Instance.SetOrganizations(model);
+            HttpContext.Holder().SetOrganizations(model);
             return Ok();
         }
 
-        [Route("/api/problems")]
-        [HttpPut]
+        [HttpPut("problems")]
         public IActionResult Problems([FromBody] List<ProblemModel> model)
         {
-            DataService.Instance.SetProblems(model);
+            HttpContext.Holder().SetProblems(model);
             return Ok();
         }
 
-        [Route("/api/scoreboard")]
-        [HttpPut]
+        [HttpPut("scoreboard")]
         public IActionResult Scoreboard([FromBody] ScoreBoardModel model)
         {
-            DataService.Instance.SetScoreboard(model);
+            HttpContext.Holder().SetScoreboard(model);
             return Ok();
         }
 
-        [Route("/api/groups")]
-        [HttpPut]
+        [HttpPut("groups")]
         public IActionResult Groups([FromBody] List<Group> model)
         {
             foreach (var mod in model)
@@ -59,15 +70,14 @@ namespace Board.Controllers
                 }
             }
 
-            DataService.Instance.SetGroups(model);
+            HttpContext.Holder().SetGroups(model);
             return Ok();
         }
 
-        [Route("/api/scoreboard")]
-        [HttpDelete]
+        [HttpDelete("scoreboard")]
         public IActionResult Scoreboard()
         {
-            DataService.Instance.SetScoreboard(new ScoreBoardModel
+            HttpContext.Holder().SetScoreboard(new ScoreBoardModel
             {
                 rows = new Row[0],
                 time = DateTime.Now,
@@ -79,11 +89,10 @@ namespace Board.Controllers
             return Ok();
         }
 
-        [Route("/api/teams")]
-        [HttpPut]
+        [HttpPut("teams")]
         public IActionResult Teams([FromBody] List<TeamModel> model)
         {
-            DataService.Instance.SetTeams(model);
+            HttpContext.Holder().SetTeams(model);
             return Ok();
         }
     }

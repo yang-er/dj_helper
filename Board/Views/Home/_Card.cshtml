@@ -1,8 +1,9 @@
 ﻿@{ 
-    var contest = DataService.Instance.Contest;
-    var scoreboard = DataService.Instance.ScoreBoard;
-    var freezeTime = DataService.Instance.BoardFreezeTime;
-    var freezeLength = DataService.Instance.FreezeLength;
+    var data = Context.Holder();
+    var contest = data.Contest;
+    var scoreboard = data.ScoreBoard;
+    var freezeTime = data.BoardFreezeTime;
+    var freezeLength = data.FreezeLength;
 }
 
 <div class="card">

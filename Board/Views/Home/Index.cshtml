@@ -1,12 +1,14 @@
 ﻿@model IEnumerable<RankTermModel>
 @{
-    var fb = DataService.Instance.FirstSolve;
-    var inc = DataService.Instance.Incorrect;
-    var sol = DataService.Instance.Solved;
-    var tott = DataService.Instance.SolvedTotal;
-    var pend = DataService.Instance.Pending;
-    var orgs = DataService.Instance.Organizations;
-    var grps = DataService.Instance.Groups;
+    var data = Context.Holder();
+    var fb = data.FirstSolve;
+    var inc = data.Incorrect;
+    var sol = data.Solved;
+    var tott = data.SolvedTotal;
+    var pend = data.Pending;
+    var orgs = data.Organizations;
+    var grps = data.Groups;
+    var lu = data.LastUpdate;
 }
 
 <partial name="_Card" /><partial name="_Filter" />
@@ -26,7 +28,7 @@
 <tbody><tr class="score_first"><td>Solved first</td></tr><tr class="score_correct"><td>Solved</td></tr><tr class="score_incorrect">
 <td>Tried, incorrect</td></tr><tr class="score_pending"><td>Tried, pending</td></tr><tr class="score_neutral"><td>Untried</td></tr></tbody></table>
 <style>@foreach (var grp in grps){@Html.Raw(".cl_" + grp.Value.color.TrimStart('#') + "{background-color:"+grp.Value.color+";}")}</style>
-<p id="lastmod">Last Update: @string.Format("{0:R}", DataService.Instance.LastUpdate).Replace("GMT", "CST")<br />using <a href="https://www.domjudge.org/" target="_top">DOMjudge</a></p>
+<p id="lastmod">Last Update: @string.Format("{0:R}", lu).Replace("GMT", "CST")<br />using <a href="https://www.domjudge.org/" target="_top">DOMjudge</a></p>
 
 @section Scripts {
 
@@ -45,10 +47,10 @@
 
             /* toggle refresh if set */
             $('#refresh-navitem').on('click', function () {
-                toggleRefresh('/@Html.Raw(ViewData["CurrentQuery"])', 30, 1);
+                toggleRefresh('/@data._name@Html.Raw(ViewData["CurrentQuery"])', 30, 1);
             });
             /* Enable page refresh if set if wanted by the page, and wanted by the user */
-            enableRefresh('/@Html.Raw(ViewData["CurrentQuery"])', 30, 1);
+            enableRefresh('/@data._name@Html.Raw(ViewData["CurrentQuery"])', 30, 1);
 
             initializeAjaxModals();
         });
@@ -56,7 +58,7 @@
     <script>
         initFavouriteTeams();
 
-        var scoreboardUrl = '/';
+        var scoreboardUrl = '/@data._name';
 
         $(function () {
             window.initializeScoreboard = function () {

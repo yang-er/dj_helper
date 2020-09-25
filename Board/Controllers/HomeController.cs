@@ -33,18 +33,28 @@ namespace Board.Controllers
             }
         }
 
-        [Route("/")]
+        [Route("/{name}")]
         public IActionResult Index(
+            [FromRoute] string name,
             [FromQuery(Name = "affiliations[]")] string[] affiliations,
             [FromQuery(Name = "categories[]")] string[] categories,
             [FromQuery(Name = "clear")] string clear = "")
         {
-            if (DataService.Instance.Contest.start_time > DateTime.Now)
+            if (!DataService.Instance.Have(name))
+            {
+                return NotFound();
+            }
+            else
+            {
+                HttpContext.Features.Set(DataService.Instance[name]);
+            }
+
+            if (HttpContext.Holder().Contest.start_time > DateTime.Now)
                 return View("Pending");
 
             ViewData["CurrentQuery"] = HttpContext.Request.QueryString.Value.Replace("&amp;", "&");
-            var teamSource = DataService.Instance.Teams;
-            var source = DataService.Instance.ScoreBoard.rows.Select(r => 
+            var teamSource = HttpContext.Holder().Teams;
+            var source = HttpContext.Holder().ScoreBoard.rows.Select(r => 
                 (r, teamSource.ContainsKey(r.team_id) ? teamSource[r.team_id] : new TeamModel
                 {
                     group_ids = new[] { "4" },

@@ -1,5 +1,6 @@
 ﻿@{
-    var ctx = DataService.Instance.Contest;
+    var data = Context.Holder();
+    var ctx = data.Contest;
 }
 
 <h1 id="teamwelcome" class="text-center">
@@ -26,10 +27,10 @@
 
             /* toggle refresh if set */
             $('#refresh-navitem').on('click', function () {
-                toggleRefresh('/@Html.Raw(ViewData["CurrentQuery"])', 30, 1);
+                toggleRefresh('/@data._name@Html.Raw(ViewData["CurrentQuery"])', 30, 1);
             });
             /* Enable page refresh if set if wanted by the page, and wanted by the user */
-            enableRefresh('/@Html.Raw(ViewData["CurrentQuery"])', 30, 1);
+            enableRefresh('/@data._name@Html.Raw(ViewData["CurrentQuery"])', 30, 1);
 
             initializeAjaxModals();
         });
@@ -37,7 +38,7 @@
     <script>
         initFavouriteTeams();
 
-        var scoreboardUrl = '/';
+        var scoreboardUrl = '/@data._name';
 
         $(function () {
             window.initializeScoreboard = function () {
