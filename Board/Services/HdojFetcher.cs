@@ -279,7 +279,7 @@ namespace Board.Services
                             icpc_id = ss,
                             sortorder = 0,
                             hidden = false,
-                            color = ss.Contains("女") ? "#ff99cc" : ss.Contains("星") ? "#ffcc33" : "#ffffff",
+                            color = ss.Contains("星") ? "#ffcc33" : ss.Contains("独立学院") ? "#33cc44" : ss.Contains("女") ? "#ff99cc" : "#ffffff",
                             id = ss,
                             name = ss,
                         };
@@ -294,11 +294,20 @@ namespace Board.Services
 
                     if (_lop == 1)
                     {
-                        name = name.Replace("<br>", "").Replace("\n", "");
+                        name = name.Replace("<br>", " ").Replace("\n", " ");
                         var ss = name.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
                         name = ss[0];
                         orgg = orgn = GetAff(ss[2]).id;
                         catt = GetGrp(ss[1]).id;
+                    }
+                    else if (_lop == 2)
+                    {
+                        //team001 未来可期 白城师范学院 普通高校
+                        name = name.Replace("<br>", " ").Replace("\n", " ");
+                        var ss = name.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                        name = string.Join(' ', ss[1..^2]);
+                        orgg = orgn = GetAff(ss[^2]).id;
+                        catt = GetGrp(ss[^1]).id;
                     }
                     else
                     {

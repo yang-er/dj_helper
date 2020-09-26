@@ -1,1 +1,7 @@
-[{"name":"nwerc18","title":"NWERC","hdoj":null},{"name":"ccpc2020net","title":"网络赛","hdoj":"909;admin;123456;1"}]
+[
+  {
+    "name": "jilin-warmup",
+    "title": "吉林省赛",
+    "hdoj": "918;guest;123456;2"
+  }
+]
