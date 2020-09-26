@@ -18,7 +18,7 @@ namespace Board.Services
 
         private ILogger<DataService> Logger { get; }
 
-        private readonly ILoggerFactory _loggerFactory;
+        internal readonly ILoggerFactory _loggerFactory;
 
         private readonly ConcurrentDictionary<string, DataHolder> _dict;
 
@@ -45,7 +45,7 @@ namespace Board.Services
 
         public List<Tenant> GetTenants()
         {
-            return _dict.Values.Select(a => new Tenant { name = a._name, title = a._title }).ToList();
+            return _dict.Values.Select(a => new Tenant { name = a._name, title = a._title, hdoj = a._hdoj }).ToList();
         }
 
         private static T Parse<T>(string jsonString)

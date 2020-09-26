@@ -34,15 +34,20 @@ namespace Board.Controllers
         }
 
         [Route("/{name}")]
+        [Route("/")]
         public IActionResult Index(
             [FromRoute] string name,
             [FromQuery(Name = "affiliations[]")] string[] affiliations,
             [FromQuery(Name = "categories[]")] string[] categories,
             [FromQuery(Name = "clear")] string clear = "")
         {
+            name ??= string.Empty;
+
             if (!DataService.Instance.Have(name))
             {
-                return NotFound();
+                Response.StatusCode = 404;
+                HttpContext.Features.Set(NotFoundItem.Value);
+                return View("Menus");
             }
             else
             {
@@ -93,5 +98,26 @@ namespace Board.Controllers
                 Team = t.Item2
             }).ToList());
         }
+
+        static readonly Lazy<DataHolder> NotFoundItem = new Lazy<DataHolder>(() =>
+        {
+            var dh = new DataHolder("not-found", "Scoreboard", DataService.Instance._loggerFactory);
+            
+            dh.SetContest(new ContestModel
+            {
+                formal_name = "Scoreboard",
+                penalty_time = 20,
+                start_time = DateTime.UnixEpoch,
+                end_time = DateTime.UnixEpoch.AddDays(1),
+                duration = "24:00:00.000",
+                scoreboard_freeze_duration = "0:00:00.000",
+                id = "2",
+                external_id = "demo",
+                name = "Scoreboard",
+                shortname = "demo",
+            });
+
+            return dh;
+        });
     }
 }

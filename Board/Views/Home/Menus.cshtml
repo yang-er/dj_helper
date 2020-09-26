@@ -1,0 +1,23 @@
+﻿@{
+    var tenants = DataService.Instance.GetTenants();
+}
+
+<div style="max-width:480px;margin:0 auto;">
+    <h2 class="text-center">Project Board</h2>
+    <h5 class="text-center">Live Update Scoreboard</h5>
+@foreach (var tenant in tenants)
+{
+    <div class="card mt-3">
+        <div class="card-body text-center">
+            <h3 class="card-title">@tenant.title</h3>
+            <h6 class="card-subtitle mb-2 text-muted">@tenant.name</h6>
+            <h6 class="card-subtitle mb-2 text-muted">@(tenant.hdoj == null ? "External Source" : "HDU OJ Live")</h6>
+
+            <a class="btn btn-info" role="button" href="/@tenant.name">
+                <i class="fas fa-ticket-alt"></i>
+                scoreboard
+            </a>
+        </div>
+    </div>
+}
+</div>
