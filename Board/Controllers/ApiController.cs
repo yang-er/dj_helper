@@ -79,7 +79,7 @@ namespace Board.Controllers
         {
             HttpContext.Holder().SetScoreboard(new ScoreBoardModel
             {
-                rows = new Row[0],
+                rows = new List<Row>(),
                 time = DateTime.Now,
                 state = new State(),
                 event_id = "-1",

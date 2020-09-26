@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Board.Models
 {
@@ -9,7 +10,7 @@ namespace Board.Models
         public DateTime time { get; set; }
         public string contest_time { get; set; }
         public State state { get; set; }
-        public Row[] rows { get; set; }
+        public List<Row> rows { get; set; }
     }
 
     public class Group

@@ -17,6 +17,8 @@ namespace Board.Services
 
         public readonly string _title;
 
+        public string _hdoj;
+
         private readonly ILogger Logger;
 
         private static T Parse<T>(string jsonString)
@@ -53,7 +55,7 @@ namespace Board.Services
             {
                 contest_time = "",
                 event_id = "",
-                rows = new Row[0],
+                rows = new List<Row>(),
                 state = new State(),
                 time = DateTime.UnixEpoch
             });
@@ -126,7 +128,7 @@ namespace Board.Services
             {
                 contest_time = "",
                 event_id = "",
-                rows = new Row[0],
+                rows = new List<Row>(),
                 state = new State(),
                 time = DateTime.UnixEpoch
             };

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Board.Services
 {
-    public class DataService : IHostedService
+    public class DataService : BackgroundService
     {
         public static DataService Instance { get; private set; }
 
@@ -29,6 +30,7 @@ namespace Board.Services
             _loggerFactory = loggerFactory;
             _dict = new ConcurrentDictionary<string, DataHolder>();
             Instance = this;
+            Fetchers = new List<HdojFetcher>();
         }
 
         public bool Have(string s)
@@ -60,10 +62,13 @@ namespace Board.Services
             }
         }
 
+        public readonly List<HdojFetcher> Fetchers;
+
         public class Tenant
         {
             public string name { get; set; }
             public string title { get; set; }
+            public string hdoj { get; set; }
         }
 
         private static string ToJson(object value)
@@ -74,7 +79,7 @@ namespace Board.Services
             return sb.ToString();
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public override async Task StartAsync(CancellationToken cancellationToken)
         {
             if (File.Exists("tenant.json"))
             {
@@ -87,20 +92,49 @@ namespace Board.Services
                     var dataHolder = new DataHolder(tenant.name, tenant.title, _loggerFactory);
                     await dataHolder.StartAsync();
                     _dict.TryAdd(tenant.name, dataHolder);
+
+                    if (tenant.hdoj != null)
+                    {
+                        dataHolder._hdoj = tenant.hdoj;
+                        var st = tenant.hdoj.Split(";");
+                        var cid = int.Parse(st[0]);
+                        Fetchers.Add(new HdojFetcher(cid, dataHolder, st[1], st[2], _loggerFactory.CreateLogger("HdojFetcher." + tenant.name)));
+                    }
                 }
             }
+
+            await base.StartAsync(cancellationToken);
         }
 
-        public async Task StopAsync(CancellationToken cancellationToken)
+        public override async Task StopAsync(CancellationToken cancellationToken)
         {
+            await base.StopAsync(cancellationToken);
+
             var tenants = _dict.Values.ToList();
             foreach (var tenant in tenants)
             {
                 await tenant.StopAsync();
             }
 
-            var items = tenants.Select(a => new Tenant { name = a._name, title = a._title }).ToList();
+            var items = tenants.Select(a => new Tenant { name = a._name, title = a._title, hdoj = a._hdoj }).ToList();
             await File.WriteAllTextAsync("tenant.json", ToJson(items));
+        }
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                try
+                {
+                    await Task.WhenAll(Fetchers.Select(a => a.Work()));
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex, "Unknown error.");
+                }
+
+                await Task.Delay(30 * 1000, stoppingToken);
+            }
         }
     }
 }
