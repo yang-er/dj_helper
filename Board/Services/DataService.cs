@@ -98,7 +98,8 @@ namespace Board.Services
                         dataHolder._hdoj = tenant.hdoj;
                         var st = tenant.hdoj.Split(";");
                         var cid = int.Parse(st[0]);
-                        Fetchers.Add(new HdojFetcher(cid, dataHolder, st[1], st[2], _loggerFactory.CreateLogger("HdojFetcher." + tenant.name)));
+                        var qot = int.Parse(st[3]);
+                        Fetchers.Add(new HdojFetcher(cid, dataHolder, st[1], st[2], qot, _loggerFactory.CreateLogger("HdojFetcher." + tenant.name)));
                     }
                 }
             }

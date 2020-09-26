@@ -34,7 +34,7 @@
     </div>
 </div>
 
-@if (DateTime.Now > freezeTime && scoreboard.state.thawed is null)
+@if (freezeLength > 0 && DateTime.Now > freezeTime && scoreboard.state.thawed is null)
 {
 <div class="alert alert-warning" role="alert" style="font-size: 80%;">
     The scoreboard was frozen with @freezeLength minutes remaining - solutions

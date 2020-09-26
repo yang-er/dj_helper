@@ -20,11 +20,13 @@ namespace Board.Services
         private readonly HttpContent _loginContent;
         private readonly ILogger _logger;
         private bool _loginStatus;
+        private readonly int _lop;
 
-        public HdojFetcher(int cid, DataHolder data, string username, string userpass, ILogger logger)
+        public HdojFetcher(int cid, DataHolder data, string username, string userpass, int lop, ILogger logger)
         {
             _data = data;
             _cid = cid;
+            _lop = lop;
             _logger = logger;
 
             var handler = new HttpClientHandler();
@@ -176,11 +178,22 @@ namespace Board.Services
                 scb.rows.Add(row);
             }
 
+            var ctx = _data.Contest;
+            scb.state = new State
+            {
+                started = ctx.start_time,
+                ended = ctx.end_time < DateTime.Now ? ctx.end_time : default(DateTime?),
+                thawed = ctx.end_time < DateTime.Now ? ctx.end_time : default(DateTime?),
+                finalized = ctx.end_time < DateTime.Now ? ctx.end_time : default(DateTime?),
+                frozen = ctx.end_time < DateTime.Now ? ctx.end_time : default(DateTime?),
+            };
+
             _data.SetScoreboard(scb);
         }
 
         public async Task Upd()
         {
+            #region Problems
             var res = await _httpClient.GetStringAsync($"/contests/contest_show.php?cid={_cid}");
 
             var pmod = new List<ProblemModel>();
@@ -211,8 +224,109 @@ namespace Board.Services
                 pid++;
                 idx = res.IndexOf(flag, idx3);
             }
+            #endregion
+
+            #region Categories
+            const string flag2 = "<tr><td width=5% bgcolor=";
+            res = await _httpClient.GetStringAsync($"/contests/concern_person.php?cid={_cid}");
+            const string flag3 = "...<td>";
+            const string flag4 = "</td>";
+            const string flag5 = "<td width= 15%";
+            const string flag6 = "<td width= 39%";
+            var aff = new Dictionary<string, AffiliationModel>();
+            var org = new Dictionary<string, Group>();
+            var tms = new List<TeamModel>();
+
+            idx = res.IndexOf(flag2);
+            while (idx != -1)
+            {
+                int idx2 = res.IndexOf(flag3, idx + flag2.Length);
+                var row = res[idx..idx2];
+
+                int stt = row.IndexOf(flag5) + flag5.Length;
+                int sttt = row.IndexOf(flag4, stt);
+                var teamId = row[stt..sttt];
+                teamId = teamId.Substring(teamId.IndexOf('>') + 1);
+
+                stt = row.IndexOf(flag6) + flag6.Length;
+                sttt = row.IndexOf(flag4, stt);
+                var teamName = row[stt..sttt];
+                teamName = teamName.Substring(teamName.IndexOf('>') + 1);
+
+                AffiliationModel GetAff(string affn)
+                {
+                    if (!aff.TryGetValue(affn, out var affff))
+                    {
+                        aff[affn] = affff = new AffiliationModel
+                        {
+                            icpc_id = affn,
+                            shortname = affn,
+                            formal_name = affn,
+                            id = affn,
+                            name = affn,
+                        };
+                    }
+
+                    return affff;
+                }
+
+                Group GetGrp(string ss)
+                {
+                    if (!org.TryGetValue(ss, out var orggg))
+                    {
+                        org[ss] = orggg = new Group
+                        {
+                            icpc_id = ss,
+                            sortorder = 0,
+                            hidden = false,
+                            color = ss.Contains("女") ? "#ff99cc" : ss.Contains("星") ? "#ffcc33" : "#ffffff",
+                            id = ss,
+                            name = ss,
+                        };
+                    }
+
+                    return orggg;
+                }
+
+                void Parse(string id, string name)
+                {
+                    string catt, orgg, orgn;
+
+                    if (_lop == 1)
+                    {
+                        name = name.Replace("<br>", "").Replace("\n", "");
+                        var ss = name.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                        name = ss[0];
+                        orgg = orgn = GetAff(ss[2]).id;
+                        catt = GetGrp(ss[1]).id;
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
+
+                    tms.Add(new TeamModel
+                    {
+                        icpc_id = id,
+                        externalid = id,
+                        id = id,
+                        members = "",
+                        group_ids = new[] { catt },
+                        affiliation = orgn,
+                        organization_id = orgg,
+                        name = name,
+                    });
+                }
+
+                Parse(teamId, teamName);
+                idx = res.IndexOf(flag2, idx2 + flag3.Length);
+            }
+            #endregion
 
             _data.SetProblems(pmod);
+            _data.SetOrganizations(aff.Values.ToList());
+            _data.SetGroups(org.Values.ToList());
+            _data.SetTeams(tms);
         }
 
         public async Task Work()
