@@ -279,7 +279,10 @@ namespace Board.Services
                             icpc_id = ss,
                             sortorder = 0,
                             hidden = false,
-                            color = ss.Contains("星") ? "#ffcc33" : ss.Contains("独立学院") ? "#33cc44" : ss.Contains("女") ? "#ff99cc" : "#ffffff",
+                            color = ss.Contains("星") || ss.Contains("*") ? "#ffcc33"
+                                  : ss.Contains("独立学院") ? "#33cc44"
+                                  : ss.Contains("女") ? "#ff99cc"
+                                  : "#ffffff",
                             id = ss,
                             name = ss,
                         };
@@ -308,6 +311,15 @@ namespace Board.Services
                         name = string.Join(' ', ss[1..^2]);
                         orgg = orgn = GetAff(ss[^2]).id;
                         catt = GetGrp(ss[^1]).id;
+                    }
+                    else if (_lop == 3)
+                    {
+                        //team049 青阳 正式 哈尔滨工业大学
+                        name = name.Replace("<br>", " ").Replace("\n", " ");
+                        var ss = name.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                        name = string.Join(' ', ss[1..^2]);
+                        orgg = orgn = GetAff(ss[^1]).id;
+                        catt = GetGrp(ss[^2]).id;
                     }
                     else
                     {
