@@ -344,6 +344,35 @@ namespace Board.Services
             }
             #endregion
 
+            #region Retry Problems
+            if (pmod.Count == 0)
+            {
+                var rklist = await _httpClient.GetStringAsync($"/contests/contest_ranklist.php?cid={_cid}&page=1");
+                var idx1 = rklist.IndexOf("<td>1001</td>");
+                var idx2 = rklist.IndexOf("</tr>", idx1);
+                var lst = rklist[idx1..idx2].Trim().Split("</td><td>");
+                if (lst[^1] != $"{1000 + lst.Length}</td>")
+                    throw new InvalidOperationException();
+                
+                for (int i = 0; i < lst.Length; i++)
+                {
+                    pmod.Add(new ProblemModel
+                    {
+                        rgb = "#fff",
+                        time_limit = 1.0,
+                        test_data_count = 1,
+                        ordinal = i + 1,
+                        externalid = $"{i + 1001}",
+                        name = "Unknown",
+                        short_name = new string((char)('A' + i), 1),
+                        color = "white",
+                        label = "hduoj",
+                        id = $"{i + 1001}",
+                    });
+                }
+            }
+            #endregion
+
             _data.SetProblems(pmod);
             _data.SetOrganizations(aff.Values.ToList());
             _data.SetGroups(org.Values.ToList());

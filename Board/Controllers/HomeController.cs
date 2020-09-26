@@ -59,18 +59,7 @@ namespace Board.Controllers
 
             ViewData["CurrentQuery"] = HttpContext.Request.QueryString.Value.Replace("&amp;", "&");
             var teamSource = HttpContext.Holder().Teams;
-            var source = HttpContext.Holder().ScoreBoard.rows.Select(r => 
-                (r, teamSource.ContainsKey(r.team_id) ? teamSource[r.team_id] : new TeamModel
-                {
-                    group_ids = new[] { "4" },
-                    affiliation = "Unknown Affiliation",
-                    externalid = "n/a",
-                    icpc_id = "n/a",
-                    id = r.team_id,
-                    members = "",
-                    name = "Unknown Team",
-                    organization_id = "n/a"
-                }));
+            var source = HttpContext.Holder().ScoreBoard.rows.Where(r => teamSource.ContainsKey(r.team_id)).Select(r => (r, teamSource[r.team_id]));
 
             if (clear == "clear")
             {
