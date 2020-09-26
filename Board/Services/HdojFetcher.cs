@@ -99,7 +99,7 @@ namespace Board.Services
         {
             const string mark = "</tr><script language=javascript>";
             var idx = content.LastIndexOf(mark);
-            if (idx != -1) { _loginStatus = false; throw new Exception("mark not found."); }
+            if (idx == -1) { _loginStatus = false; throw new Exception("mark not found."); }
             var lastRnk = new Score { num_solved = 999 };
             int rk = 1, rk2 = 1;
 
@@ -115,7 +115,7 @@ namespace Board.Services
                 left++;
                 var scb = content.Substring(left, right - left + 1);
                 var itc = scb.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                if (itc.Length == _data.Problems.Count) throw new Exception("invalid data");
+                if (itc.Length != _data.Problems.Count) throw new Exception("invalid data");
                 var result = new Problem[itc.Length];
                 var res = new Score();
 
