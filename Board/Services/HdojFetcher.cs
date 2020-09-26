@@ -50,7 +50,7 @@ namespace Board.Services
             try
             {
                 using var tt = await _httpClient.GetAsync($"/contests/contest_show.php?cid={_cid}");
-                if (tt.StatusCode == HttpStatusCode.OK) return true;
+                if (tt.StatusCode == HttpStatusCode.OK) return _loginStatus = true;
                 var loginMessage = new HttpRequestMessage(HttpMethod.Post, $"userloginex.php?action=login&cid={_cid}&notice=0");
                 loginMessage.Content = _loginContent;
                 loginMessage.Headers.Referrer = new Uri($"http://acm.hdu.edu.cn/userloginex.php?cid={_cid}");
@@ -99,7 +99,7 @@ namespace Board.Services
         {
             const string mark = "</tr><script language=javascript>";
             var idx = content.LastIndexOf(mark);
-            Debug.Assert(idx != -1);
+            if (idx != -1) { _loginStatus = false; throw new Exception("mark not found."); }
             var lastRnk = new Score { num_solved = 999 };
             int rk = 1, rk2 = 1;
 
@@ -115,7 +115,7 @@ namespace Board.Services
                 left++;
                 var scb = content.Substring(left, right - left + 1);
                 var itc = scb.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                Debug.Assert(itc.Length == _data.Problems.Count);
+                if (itc.Length == _data.Problems.Count) throw new Exception("invalid data");
                 var result = new Problem[itc.Length];
                 var res = new Score();
 
