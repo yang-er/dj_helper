@@ -127,7 +127,7 @@ namespace Board.Services
             {
                 try
                 {
-                    await Task.WhenAll(Fetchers.Select(a => a.Work()));
+                    foreach (var item in Fetchers) await item.Work();
                 }
                 catch (Exception ex)
                 {

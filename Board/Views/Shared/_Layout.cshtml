@@ -1,5 +1,5 @@
 ﻿@{ 
-    var data = Context.Holder();
+    DataHolder data = ViewBag.Holder;
     var start = new DateTimeOffset(data.Contest.start_time).ToUnixTimeSeconds();
     var end = new DateTimeOffset(data.Contest.end_time).ToUnixTimeSeconds();
     var now = DateTimeOffset.Now.ToUnixTimeSeconds();

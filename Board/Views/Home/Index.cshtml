@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<RankTermModel>
 @{
-    var data = Context.Holder();
+    DataHolder data = ViewBag.Holder;
     var fb = data.FirstSolve;
     var inc = data.Incorrect;
     var sol = data.Solved;

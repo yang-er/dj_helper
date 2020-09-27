@@ -1,3 +1,4 @@
-﻿<thead><tr class="scoreheader"><th title="rank" scope="col">rank</th><th title="team name" scope="col" colspan="3">team</th><th title="# solved / penalty time" colspan="2" scope="col">score</th>
-@foreach (var prob in Context.Holder().Problems){<th title="problem @prob.name" scope="col">@prob.short_name <div class="circle" style="background: @prob.rgb;"></div></th>}
+﻿@{ DataHolder holder = ViewBag.Holder; }
+<thead><tr class="scoreheader"><th title="rank" scope="col">rank</th><th title="team name" scope="col" colspan="3">team</th><th title="# solved / penalty time" colspan="2" scope="col">score</th>
+@foreach (var prob in holder.Problems){<th title="problem @prob.name" scope="col">@prob.short_name <div class="circle" style="background: @prob.rgb;"></div></th>}
 </tr></thead>

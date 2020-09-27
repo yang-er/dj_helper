@@ -42,24 +42,25 @@ namespace Board.Controllers
             [FromQuery(Name = "clear")] string clear = "")
         {
             name ??= string.Empty;
+            DataHolder holder;
 
             if (!DataService.Instance.Have(name))
             {
                 Response.StatusCode = 404;
-                HttpContext.Items.Add("Board", NotFoundItem.Value);
+                ViewBag.Holder = holder = NotFoundItem.Value;
                 return View("Menus");
             }
             else
             {
-                HttpContext.Items.Add("Board", DataService.Instance[name]);
+                ViewBag.Holder = holder = DataService.Instance[name];
             }
 
-            if (HttpContext.Holder().Contest.start_time > DateTime.Now)
+            if (holder.Contest.start_time > DateTime.Now)
                 return View("Pending");
 
             ViewData["CurrentQuery"] = HttpContext.Request.QueryString.Value.Replace("&amp;", "&");
-            var teamSource = HttpContext.Holder().Teams;
-            var source = HttpContext.Holder().ScoreBoard.rows.Where(r => teamSource.ContainsKey(r.team_id)).Select(r => (r, teamSource[r.team_id]));
+            var teamSource = holder.Teams;
+            var source = holder.ScoreBoard.rows.Where(r => teamSource.ContainsKey(r.team_id)).Select(r => (r, teamSource[r.team_id]));
 
             if (clear == "clear")
             {
