@@ -22,7 +22,7 @@ namespace Board.Controllers
                 return;
             }
 
-            HttpContext.Features.Set(DataService.Instance[name]);
+            HttpContext.Items.Add("Board", DataService.Instance[name]);
         }
 
         [HttpGet]

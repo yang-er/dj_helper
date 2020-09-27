@@ -274,7 +274,7 @@ namespace Board.Services
     {
         public static DataHolder Holder(this HttpContext httpContext)
         {
-            return httpContext.Features.Get<DataHolder>();
+            return (DataHolder)httpContext.Items["Board"];
         }
     }
 }

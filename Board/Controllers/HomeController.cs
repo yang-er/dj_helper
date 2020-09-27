@@ -46,12 +46,12 @@ namespace Board.Controllers
             if (!DataService.Instance.Have(name))
             {
                 Response.StatusCode = 404;
-                HttpContext.Features.Set(NotFoundItem.Value);
+                HttpContext.Items.Add("Board", NotFoundItem.Value);
                 return View("Menus");
             }
             else
             {
-                HttpContext.Features.Set(DataService.Instance[name]);
+                HttpContext.Items.Add("Board", DataService.Instance[name]);
             }
 
             if (HttpContext.Holder().Contest.start_time > DateTime.Now)

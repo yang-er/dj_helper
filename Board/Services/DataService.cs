@@ -20,7 +20,7 @@ namespace Board.Services
 
         internal readonly ILoggerFactory _loggerFactory;
 
-        private readonly ConcurrentDictionary<string, DataHolder> _dict;
+        private readonly Dictionary<string, DataHolder> _dict;
 
         public DataHolder this[string name] => _dict.GetValueOrDefault(name) ?? new DataHolder(name, "Not Found", _loggerFactory);
 
@@ -28,7 +28,7 @@ namespace Board.Services
         {
             Logger = loggerFactory.CreateLogger<DataService>();
             _loggerFactory = loggerFactory;
-            _dict = new ConcurrentDictionary<string, DataHolder>();
+            _dict = new Dictionary<string, DataHolder>();
             Instance = this;
             Fetchers = new List<HdojFetcher>();
         }
