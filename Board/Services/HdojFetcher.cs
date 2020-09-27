@@ -188,7 +188,8 @@ namespace Board.Services
                 frozen = ctx.end_time < DateTime.Now ? ctx.end_time : default(DateTime?),
             };
 
-            _data.SetScoreboard(scb);
+            if (Math.Abs(scb.rows.Count - _data.Teams.Count) < 4)
+                _data.SetScoreboard(scb);
         }
 
         public async Task Upd()
