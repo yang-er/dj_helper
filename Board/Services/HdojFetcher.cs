@@ -188,7 +188,7 @@ namespace Board.Services
                 frozen = ctx.end_time < DateTime.Now ? ctx.end_time : default(DateTime?),
             };
 
-            if ((scb.rows.LastOrDefault().team_id == "print") == (_data.Contest.name == "jilin"))
+            if ((scb.rows.Last().team_id == "print") == (_data.Contest.external_id == "jilin"))
                 _data.SetScoreboard(scb);
         }
 
