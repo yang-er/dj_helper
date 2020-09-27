@@ -188,7 +188,7 @@ namespace Board.Services
                 frozen = ctx.end_time < DateTime.Now ? ctx.end_time : default(DateTime?),
             };
 
-            if (Math.Abs(scb.rows.Count - _data.Teams.Count) < 4)
+            if ((scb.rows.LastOrDefault().team_id == "print") == (_data.Contest.name == "jilin"))
                 _data.SetScoreboard(scb);
         }
 
