@@ -127,14 +127,16 @@ namespace Board.Services
             {
                 try
                 {
-                    foreach (var item in Fetchers) await item.Work();
+                    foreach (var item in Fetchers)
+                    {
+                        await item.Work();
+                        await Task.Delay(15 * 1000, stoppingToken);
+                    }
                 }
                 catch (Exception ex)
                 {
                     Logger.LogError(ex, "Unknown error.");
                 }
-
-                await Task.Delay(30 * 1000, stoppingToken);
             }
         }
     }
