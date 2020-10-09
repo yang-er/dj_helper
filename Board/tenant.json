@@ -1,1 +1,17 @@
-[{"name":"heilongjiang","title":"黑龙江省赛","hdoj":null},{"name":"jilin","title":"吉林省赛","hdoj":null}]
+[
+  {
+    "name": "northeastern",
+    "title": "东北地区赛",
+    "hdoj": "929;guest;guest;4"
+  },
+  {
+    "name": "heilongjiang",
+    "title": "黑龙江省赛",
+    "hdoj": null
+  },
+  {
+    "name": "jilin",
+    "title": "吉林省赛",
+    "hdoj": null
+  }
+]

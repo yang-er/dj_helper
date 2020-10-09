@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using Board.Services;
 using Microsoft.AspNetCore.Builder;
@@ -31,6 +33,11 @@ namespace Board
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            services.AddSingleton(
+                HtmlEncoder.Create(
+                    UnicodeRanges.BasicLatin,
+                    UnicodeRanges.CjkUnifiedIdeographs));
 
             services.AddHostedService<DataService>();
             services.AddControllersWithViews()

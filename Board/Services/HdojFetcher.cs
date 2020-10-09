@@ -283,6 +283,7 @@ namespace Board.Services
                             color = ss.Contains("星") || ss.Contains("*") ? "#ffcc33"
                                   : ss.Contains("独立学院") ? "#33cc44"
                                   : ss.Contains("女") ? "#ff99cc"
+                                  : ss.Contains("(") ? "#ff99cc"
                                   : "#ffffff",
                             id = ss,
                             name = ss,
@@ -321,6 +322,15 @@ namespace Board.Services
                         name = string.Join(' ', ss[1..^2]);
                         orgg = orgn = GetAff(ss[^1]).id;
                         catt = GetGrp(ss[^2]).id;
+                    }
+                    else if (_lop == 4)
+                    {
+                        //team005 普通高校 BTTC-2 包头师范学院
+                        name = name.Replace("<br>", " ").Replace("\n", " ");
+                        var ss = name.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                        name = string.Join(' ', ss[2..^1]);
+                        orgg = orgn = GetAff(ss[^1]).id;
+                        catt = GetGrp(ss[1]).id;
                     }
                     else
                     {
