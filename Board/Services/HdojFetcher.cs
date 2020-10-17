@@ -188,8 +188,10 @@ namespace Board.Services
                 frozen = ctx.end_time < DateTime.Now ? ctx.end_time : default(DateTime?),
             };
 
-            if ((scb.rows.Last().team_id == "print") == (_data.Contest.external_id == "jilin"))
-                _data.SetScoreboard(scb);
+            // If there are two HDOJ scoreboard running,
+            // you can try to add some more logic here
+            // to prevent data mix up
+            _data.SetScoreboard(scb);
         }
 
         public async Task Upd()
